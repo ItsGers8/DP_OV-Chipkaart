@@ -81,8 +81,8 @@ public class Reiziger {
                 " " + voorletters + '.' +
                 " " + tussenvoegsel +
                 " " + achternaam +
-                " geb. " + geboortedatum +
-                " " + adres +
+                ", geb. " + geboortedatum +
+                ", " + adres +
                 '}';
     }
 }

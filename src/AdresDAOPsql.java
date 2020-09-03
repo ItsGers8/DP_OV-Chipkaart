@@ -9,7 +9,6 @@ public class AdresDAOPsql implements AdresDAO {
 
     public AdresDAOPsql(Connection conn) {
         this.conn = conn;
-        rdao = new ReizigerDAOPsql(conn);
     }
 
     @Override
@@ -55,7 +54,12 @@ public class AdresDAOPsql implements AdresDAO {
 
     @Override
     public Adres findByReiziger(Reiziger reiziger) {
-        return reiziger.getAdres();
+        for (Adres adres : findAll()) {
+            if (adres.getReiziger_id() == reiziger.getId()) {
+                return adres;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -65,12 +69,7 @@ public class AdresDAOPsql implements AdresDAO {
             ResultSet rs = st.executeQuery("SELECT * FROM adres;");
             ArrayList<Adres> alleAdressen = new ArrayList<>();
             while (rs.next()) {
-                alleAdressen.add(new Adres(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getInt(6)));
+                alleAdressen.add(findById(rs.getInt(1)));
             }
             return alleAdressen;
         } catch (SQLException e) {

@@ -8,6 +8,7 @@ import java.util.List;
 
 public class ReizigerDAOPsql implements ReizigerDAO {
     private Connection conn;
+    private AdresDAOPsql adao;
 
     public ReizigerDAOPsql(Connection conn) {
         this.conn = conn;
@@ -15,14 +16,24 @@ public class ReizigerDAOPsql implements ReizigerDAO {
 
     @Override
     public boolean save(Reiziger reiziger) {
+        adao = new AdresDAOPsql(conn);
         String s = "INSERT INTO reiziger(reiziger_id, voorletters, tussenvoegsel, achternaam, geboortedatum) VALUES (?, ?, ?, ?, ?)";
-        return prepare(reiziger, s);
+        boolean returnValue = prepare(reiziger, s);
+        if (reiziger.getAdres() != null) {
+            adao.save(reiziger.getAdres());
+        }
+        return returnValue;
     }
 
     @Override
     public boolean update(Reiziger reiziger) {
+        adao = new AdresDAOPsql(conn);
         String s = "UPDATE reiziger SET reiziger_id = ?, voorletters = ?, tussenvoegsel = ?, achternaam = ?, geboortedatum = ?";
-        return prepare(reiziger, s);
+        boolean returnValue = prepare(reiziger, s);
+        if (findById(reiziger.getId()).getAdres() != reiziger.getAdres()) {
+            adao.save(reiziger.getAdres());
+        }
+        return returnValue;
     }
 
     @Override
@@ -72,6 +83,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
 
     @Override
     public Reiziger findById(int id) {
+        adao = new AdresDAOPsql(conn);
         String sql = "SELECT * FROM reiziger WHERE reiziger_id = " + id;
         try {
             Statement st = conn.createStatement();
@@ -86,6 +98,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
                             rs.getString(4),
                             rs.getDate(5).toLocalDate()
                     );
+                    reiziger.setAdres(adao.findByReiziger(reiziger));
                     rs.close();
                     st.close();
                     return reiziger;
