@@ -12,9 +12,13 @@ public class Main {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Wachtwoord: ");
             String url = "jdbc:postgresql://localhost:5432/ovchip?user=postgres&password=" + br.readLine();
-            ReizigerDAO reizigerDAO = new ReizigerDAOPsql(DriverManager.getConnection(url));
-            reizigerDAO.delete(reizigerDAO.findById(77));
-            testReizigerDAO(reizigerDAO);
+//            ReizigerDAO reizigerDAO = new ReizigerDAOPsql(DriverManager.getConnection(url));
+//            reizigerDAO.delete(reizigerDAO.findById(77));
+//            testReizigerDAO(reizigerDAO);
+            AdresDAO adresDAO = new AdresDAOPsql(DriverManager.getConnection(url));
+            for (Adres adres : adresDAO.findAll()) {
+                System.out.println(adres);
+            }
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
