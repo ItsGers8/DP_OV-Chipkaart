@@ -9,6 +9,7 @@ import java.util.List;
 public class ReizigerDAOPsql implements ReizigerDAO {
     private Connection conn;
     private AdresDAOPsql adao;
+    private OVChipkaartDAOPsql odao;
 
     public ReizigerDAOPsql(Connection conn) {
         this.conn = conn;
@@ -17,10 +18,14 @@ public class ReizigerDAOPsql implements ReizigerDAO {
     @Override
     public boolean save(Reiziger reiziger) {
         adao = new AdresDAOPsql(conn);
+        odao = new OVChipkaartDAOPsql(conn);
         String s = "INSERT INTO reiziger(reiziger_id, voorletters, tussenvoegsel, achternaam, geboortedatum) VALUES (?, ?, ?, ?, ?)";
         boolean returnValue = prepare(reiziger, s);
         if (reiziger.getAdres() != null) {
             adao.save(reiziger.getAdres());
+        }
+        if (reiziger.getOVChipkaarten().size() > 0) {
+            reiziger.getOVChipkaarten().forEach(ovChipkaart -> odao.save(ovChipkaart));
         }
         return returnValue;
     }
@@ -28,11 +33,13 @@ public class ReizigerDAOPsql implements ReizigerDAO {
     @Override
     public boolean update(Reiziger reiziger) {
         adao = new AdresDAOPsql(conn);
+        odao = new OVChipkaartDAOPsql(conn);
         String s = "UPDATE reiziger SET reiziger_id = ?, voorletters = ?, tussenvoegsel = ?, achternaam = ?, geboortedatum = ?";
         boolean returnValue = prepare(reiziger, s);
         if (findById(reiziger.getId()).getAdres() != reiziger.getAdres()) {
             adao.save(reiziger.getAdres());
         }
+        odao.updateKaarten(reiziger);
         return returnValue;
     }
 
@@ -84,6 +91,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
     @Override
     public Reiziger findById(int id) {
         adao = new AdresDAOPsql(conn);
+        odao = new OVChipkaartDAOPsql(conn);
         String sql = "SELECT * FROM reiziger WHERE reiziger_id = " + id;
         try {
             Statement st = conn.createStatement();
@@ -99,6 +107,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
                             rs.getDate(5).toLocalDate()
                     );
                     reiziger.setAdres(adao.findByReiziger(reiziger));
+                    reiziger.setOVChipkaarten(odao.findByReiziger(reiziger));
                     rs.close();
                     st.close();
                     return reiziger;

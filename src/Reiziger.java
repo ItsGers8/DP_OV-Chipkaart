@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Reiziger {
     private int id;
@@ -7,6 +8,7 @@ public class Reiziger {
     private String achternaam;
     private LocalDate geboortedatum;
     private Adres adres;
+    private ArrayList<OVChipkaart> OVChipkaarten = new ArrayList<>();
 
     public Reiziger(int id, String voorletters, String tussenvoegsel, String achternaam, LocalDate geboortedatum) {
         this.id = id;
@@ -71,6 +73,18 @@ public class Reiziger {
 
     public void setAdres(Adres adres) {
         this.adres = adres;
+    }
+
+    public ArrayList<OVChipkaart> getOVChipkaarten() {
+        return OVChipkaarten;
+    }
+
+    public void setOVChipkaarten(ArrayList<OVChipkaart> OVChipkaarten) {
+        this.OVChipkaarten = OVChipkaarten;
+    }
+
+    public void addOVChipkaart(OVChipkaart OVChipkaart) {
+        OVChipkaarten.add(OVChipkaart);
     }
 
     @Override
