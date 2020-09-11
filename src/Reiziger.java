@@ -85,6 +85,7 @@ public class Reiziger {
 
     public void addOVChipkaart(OVChipkaart OVChipkaart) {
         OVChipkaarten.add(OVChipkaart);
+        OVChipkaart.setReiziger_id(this.getId());
     }
 
     @Override
@@ -96,7 +97,9 @@ public class Reiziger {
                 " " + tussenvoegsel +
                 " " + achternaam +
                 ", geb. " + geboortedatum +
-                ", " + adres +
+                ", " + (adres != null ? adres : "geen adres ingevoerd") +
+                ", " + (OVChipkaarten != null ? OVChipkaarten : "0") +
+                " OV kaarten" +
                 '}';
     }
 }

@@ -67,12 +67,12 @@ public class OVChipkaart {
 
     @Override
     public String toString() {
-        return "OVChipkaart{" +
-                "kaart_nummer=" + kaart_nummer +
-                ", geldig_tot=" + geldig_tot +
-                ", klasse=" + klasse +
-                ", saldo=" + saldo +
-                ", reiziger_id=" + reiziger_id +
+        return "OVChipkaart {" +
+                "kaart_nummer #" + kaart_nummer +
+                ", geldig tot " + geldig_tot +
+                ", " + klasse + "e klasse" +
+                ", saldo €" + saldo +
+                ", reiziger id #" + reiziger_id +
                 '}';
     }
 }
