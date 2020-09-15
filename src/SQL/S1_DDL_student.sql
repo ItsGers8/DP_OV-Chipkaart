@@ -40,10 +40,10 @@ ALTER TABLE medewerkers ADD geslacht VARCHAR(1);
 ALTER TABLE medewerkers ADD CONSTRAINT m_geslacht_chk CHECK ( medewerkers.geslacht IN ( 'M', 'V' ));
 -- Een medewerker toevoegen met een geaccepteerd geslacht
 INSERT INTO medewerkers(MNR, NAAM, VOORL, FUNCTIE, CHEF, GBDATUM, MAANDSAL, COMM, GESLACHT)
-VALUES (8888, 'Mak', 'G', 'MANAGER', 7698, '2000-08-10', 1000, NULL, 'M');
+VALUES (8888, 'Mak', 'G', 'MANAGER', 7698, TO_DATE('08/10/2000', 'DD/MM/YYYY'), 1000, NULL, 'M');
 -- Een medewerker toevoegen met een verkeerd geslacht
 INSERT INTO medewerkers(MNR, NAAM, VOORL, FUNCTIE, CHEF, GBDATUM, MAANDSAL, COMM, GESLACHT)
-VALUES (8887, 'Mak', 'G', 'MANAGER', 7698, '2000-08-10', 1000, NULL, 'X');
+VALUES (8887, 'Mak', 'G', 'MANAGER', 7698, TO_DATE('08/10/2000', 'DD/MM/YYYY'), 1000, NULL, 'X');
 -- De volgende error wordt gegeven:
 -- [2020-09-04 17:00:39] [23514] ERROR: new row for relation "medewerkers" violates check constraint "m_geslacht_chk"
 
@@ -55,8 +55,10 @@ VALUES (8887, 'Mak', 'G', 'MANAGER', 7698, '2000-08-10', 1000, NULL, 'X');
 -- en valt direct onder de directeur.
 -- Voeg de nieuwe afdeling en de nieuwe medewerker toe aan de database.
 INSERT INTO medewerkers(MNR, NAAM, VOORL, FUNCTIE, CHEF, GBDATUM, MAANDSAL, COMM)
-VALUES (8000, 'DONK', 'A', 'MANAGER', 7839, '1964-05-29', 3000, null);
+VALUES (8000, 'DONK', 'A', 'MANAGER', 7839, TO_DATE('29/05/1964', 'DD/MM/YYYY'), 3000, null);
 INSERT INTO afdelingen(anr, naam, locatie, hoofd) VALUES (50, 'ONDERZOEK', 'ZWOLLE', 8000);
+
+SELECT m.naam FROM medewerkers m JOIN afdelingen a ON m.mnr = a.hoofd WHERE a.naam = 'ONDERZOEK' AND m.chef = 7839;
 
 -- S1.3. Verbetering op afdelingentabel
 --
@@ -106,7 +108,7 @@ CREATE TABLE adressen(
     FOREIGN KEY (med_mnr) REFERENCES medewerkers
 );
 INSERT INTO adressen(postcode, huisnummer, ingangsdatum, einddatum, telefoon, med_mnr)
-VALUES ('3451XK', '30', '2018-05-06', '2019-05-06', 0301254891, 8000);
+VALUES ('3451XK', '30', TO_DATE('06/05/2018', 'DD/MM/YYYY'), TO_DATE('06/05/2019', 'DD/MM/YYYY'), 0301254891, 8000);
 
 -- S1.5. Commissie
 --

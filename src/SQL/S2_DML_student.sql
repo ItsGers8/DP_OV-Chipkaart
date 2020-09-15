@@ -58,7 +58,7 @@ SELECT naam, voorl from medewerkers WHERE (voorl != 'R' OR naam != 'JANSEN');
 -- Er wordt een nieuwe uitvoering gepland voor cursus S02, en wel op de
 -- komende 2 maart. De cursus wordt gegeven in Leerdam door Nick Smit.
 -- Voeg deze gegevens toe.
-INSERT INTO uitvoeringen(cursus, begindatum, docent, locatie) VALUES ('S02', '2020-03-02', 7369, 'LEERDAM')
+INSERT INTO uitvoeringen(cursus, begindatum, docent, locatie) VALUES ('S02', TO_DATE('02/03/2020', 'DD/MM/YYYY'), 7369, 'LEERDAM')
 ON CONFLICT DO NOTHING;                                                                                         -- [TEST]
 
 
@@ -67,7 +67,7 @@ ON CONFLICT DO NOTHING;                                                         
 -- Neem één van je collega-studenten aan als stagiair ('STAGIAIR') en
 -- voer zijn of haar gegevens in. Kies een personeelnummer boven de 8000.
 INSERT INTO medewerkers(mnr, naam, voorl, functie, chef, gbdatum, maandsal, comm, afd)
-VALUES (8001, 'STEENBERGEN', 'T', 'STAGIAIR', 7499, '2001-08-29', 290.00, NULL, 30)
+VALUES (8001, 'STEENBERGEN', 'T', 'STAGIAIR', 7499, TO_DATE('29/08/2001', 'DD/MM/YYYY'), 290.00, NULL, 30)
 ON CONFLICT DO NOTHING;                                                                                         -- [TEST]
 
 
@@ -86,15 +86,15 @@ ON CONFLICT DO NOTHING;                                                         
 -- mensen in.
 INSERT INTO cursussen(code, omschrijving, type, lengte) VALUES ('D&P', 'Data & Persistency', 'ALG', 6)
 ON CONFLICT DO NOTHING;                                                                                         -- [TEST]
-INSERT INTO uitvoeringen(cursus, begindatum, docent, locatie) VALUES ('D&P', '2012-11-24', 7839, 'ZANDVOORT')
+INSERT INTO uitvoeringen(cursus, begindatum, docent, locatie) VALUES ('D&P', TO_DATE('24/11/2012', 'DD/MM/YYYY'), 7839, 'ZANDVOORT')
 ON CONFLICT DO NOTHING;                                                                                         -- [TEST]
-INSERT INTO uitvoeringen(cursus, begindatum, docent, locatie) VALUES ('D&P', '2018-12-06', 7839, 'DE KOOG')
+INSERT INTO uitvoeringen(cursus, begindatum, docent, locatie) VALUES ('D&P', TO_DATE('06/12/2018', 'DD/MM/YYYY'), 7839, 'DE KOOG')
 ON CONFLICT DO NOTHING;                                                                                         -- [TEST]
-INSERT INTO inschrijvingen(cursist, cursus, begindatum, evaluatie) VALUES (7902, 'D&P', '2018-12-06', 4)
+INSERT INTO inschrijvingen(cursist, cursus, begindatum, evaluatie) VALUES (7902, 'D&P', TO_DATE('06/12/2018', 'DD/MM/YYYY'), 4)
 ON CONFLICT DO NOTHING;                                                                                         -- [TEST]
-INSERT INTO inschrijvingen(cursist, cursus, begindatum, evaluatie) VALUES (7839, 'D&P', '2018-12-06', 5)
+INSERT INTO inschrijvingen(cursist, cursus, begindatum, evaluatie) VALUES (7839, 'D&P', TO_DATE('06/12/2018', 'DD/MM/YYYY'), 5)
 ON CONFLICT DO NOTHING;                                                                                         -- [TEST]
-INSERT INTO inschrijvingen(cursist, cursus, begindatum, evaluatie) VALUES (7902, 'D&P', '2012-11-24', 3)
+INSERT INTO inschrijvingen(cursist, cursus, begindatum, evaluatie) VALUES (7902, 'D&P', TO_DATE('24/11/2012', 'DD/MM/YYYY'), 3)
 ON CONFLICT DO NOTHING;                                                                                         -- [TEST]
 
 
@@ -123,7 +123,7 @@ DELETE FROM medewerkers WHERE mnr = 7499;
 -- onder de hoede van De Koning. Kies een personeelnummer boven de 8000.
 -- Zorg voor de juiste invoer van deze gegevens.
 INSERT INTO medewerkers(mnr, naam, voorl, functie, chef, gbdatum, maandsal, comm)
-VALUES (8888, 'MAK', 'G.J', 'HOOFD', 7839, '2000-10-08', 2900, NULL)
+VALUES (8888, 'MAK', 'G.J', 'HOOFD', 7839, TO_DATE('08/10/2000', 'DD/MM/YYYY'), 2900, NULL)
 ON CONFLICT DO NOTHING;                                                                                         -- [TEST]
 
 INSERT INTO afdelingen(naam, locatie, hoofd) VALUES ('FINANCIEN', 'LEERDAM', 8888)
