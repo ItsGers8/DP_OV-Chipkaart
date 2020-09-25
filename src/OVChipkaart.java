@@ -1,6 +1,5 @@
 import java.sql.Date;
-import java.time.LocalDate;
-import java.util.Objects;
+import java.util.ArrayList;
 
 public class OVChipkaart {
     private int kaart_nummer;
@@ -8,6 +7,7 @@ public class OVChipkaart {
     private int klasse;
     private double saldo;
     private int reiziger_id;
+    private ArrayList<Product> producten = new ArrayList<>();
 
     public OVChipkaart(int kaart_nummer, Date geldig_tot, int klasse, double saldo, int reiziger_id) {
         this.kaart_nummer = kaart_nummer;
@@ -55,6 +55,22 @@ public class OVChipkaart {
 
     public void setReiziger_id(int reiziger_id) {
         this.reiziger_id = reiziger_id;
+    }
+
+    public void addToProducten(Product product) {
+        producten.add(product);
+    }
+
+    public void removeFromProducten(Product product) {
+        producten.remove(product);
+    }
+
+    public ArrayList<Product> getProducten() {
+        return producten;
+    }
+
+    public void setProducten(ArrayList<Product> producten) {
+        this.producten = producten;
     }
 
     @Override

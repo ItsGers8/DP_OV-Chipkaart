@@ -34,7 +34,8 @@ public class ReizigerDAOPsql implements ReizigerDAO {
     public boolean update(Reiziger reiziger) {
         adao = new AdresDAOPsql(conn);
         odao = new OVChipkaartDAOPsql(conn);
-        String s = "UPDATE reiziger SET reiziger_id = ?, voorletters = ?, tussenvoegsel = ?, achternaam = ?, geboortedatum = ?";
+        String s = "UPDATE reiziger SET reiziger_id = ?, voorletters = ?, tussenvoegsel = ?, " +
+                "achternaam = ?, geboortedatum = ? WHERE reiziger_id = " + reiziger.getId() + ";";
         boolean returnValue = prepare(reiziger, s);
         if (findById(reiziger.getId()).getAdres() != reiziger.getAdres()) {
             adao.save(reiziger.getAdres());

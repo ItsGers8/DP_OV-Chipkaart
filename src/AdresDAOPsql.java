@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class AdresDAOPsql implements AdresDAO {
     private Connection conn;
-    private ReizigerDAO rdao;
 
     public AdresDAOPsql(Connection conn) {
         this.conn = conn;
@@ -19,7 +18,8 @@ public class AdresDAOPsql implements AdresDAO {
 
     @Override
     public boolean update(Adres adres) {
-        String s = "UPDATE adres SET adres_id=?, postcode=?, huisnummer=?, straat=?, woonplaats=?, reiziger_id=?;";
+        String s = "UPDATE adres SET adres_id=?, postcode=?, huisnummer=?, straat=?, " +
+                "woonplaats=?, reiziger_id=? WHERE adres_id=" + adres.getAdres_id() + ";";
         return prepare(adres, s);
     }
 
